@@ -22,9 +22,7 @@ app.post('/api/convert', async (req, res, next) => {
     const info = await ytdlCore.getInfo(url);
 
     const readableStream = ytdlCore(url, { filter: 'audioonly' });
-    const fileName = `${encodeURIComponent(
-      info.videoDetails.title
-    )}-${Date.now()}-output.mp3`;
+    const fileName = `${info.videoDetails.title}-${Date.now()}-output.mp3`;
 
     const writableStream = fs.createWriteStream(
       path.resolve('..', 'uploads', fileName)
@@ -36,13 +34,19 @@ app.post('/api/convert', async (req, res, next) => {
       res.json({
         status: 'success',
         data: {
-          downloadLink: `/download/${fileName}`,
+          downloadLink: `/download/${encodeURIComponent(fileName)}`,
         },
       });
     });
   } catch (err) {
     next(err);
   }
+});
+
+//Sends back the request filename as a download
+app.get('/download/:fileName', (req, res) => {
+  const decodedFileName = decodeURIComponent(req.params.fileName);
+  res.download(path.resolve('..', 'uploads', decodedFileName));
 });
 
 //global error handler that will catch errors and send a generic message back to client
