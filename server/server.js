@@ -1,8 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
-const path = require('path');
 const ytdlCore = require('ytdl-core');
 const fs = require('fs');
+const paths = require('./utils/paths');
 const app = express();
 
 //Request logging
@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //Serve react build folder
-app.use(express.static(path.resolve('..', 'client', 'build')));
+app.use(express.static(paths.buildFolder));
 
 //Handles converting the file to mp3, saving it to the disk, sending a response back with the DL link
 app.post('/api/convert', async (req, res, next) => {
@@ -27,7 +27,7 @@ app.post('/api/convert', async (req, res, next) => {
     const filter = req.body.format === 'mp3' ? 'audioonly' : 'videoandaudio';
     const readableStream = ytdlCore(req.body.url, { filter });
     const writableStream = fs.createWriteStream(
-      path.resolve('..', 'uploads', fileName)
+      `${paths.downloadFolder}/${fileName}`
     );
 
     //push read stream into write stream + added event handler that will send the json response once the finish event is fired
@@ -46,8 +46,9 @@ app.post('/api/convert', async (req, res, next) => {
 
 //Sends back the requested filename as a download
 app.get('/download/:fileName', (req, res, next) => {
-  const decodedFileName = decodeURIComponent(req.params.fileName);
-  res.download(path.resolve('..', 'uploads', decodedFileName), (err) => {
+  const fileName = decodeURIComponent(req.params.fileName);
+
+  res.download(`${paths.downloadFolder}/${fileName}`, (err) => {
     if (err) next(new Error('Sorry, that file does not exist!'));
   });
 });
