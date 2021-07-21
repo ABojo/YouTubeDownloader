@@ -5,8 +5,6 @@ const ytdlCore = require('ytdl-core');
 const fs = require('fs');
 const app = express();
 
-const apiRouter = require('./routes/apiRoutes');
-
 //Request logging
 app.use(morgan('dev'));
 
@@ -16,33 +14,44 @@ app.use(express.json());
 //Serve react build folder
 app.use(express.static(path.resolve('..', 'client', 'build')));
 
-app.post('/api/convert', async (req, res) => {
-  const { url } = req.body;
+//Handles converting the file to mp3, saving it to the disk, sending a response back with the DL link
+app.post('/api/convert', async (req, res, next) => {
+  try {
+    const { url } = req.body;
 
-  const readableStream = ytdlCore(url, { filter: 'audioonly' });
-  const info = await ytdlCore.getInfo(url);
-  const fileName = `${encodeURIComponent(
-    info.videoDetails.title
-  )}-${Date.now()}-output.mp3`;
+    const info = await ytdlCore.getInfo(url);
 
-  const writableStream = fs.createWriteStream(
-    path.resolve('..', 'uploads', fileName)
-  );
+    const readableStream = ytdlCore(url, { filter: 'audioonly' });
+    const fileName = `${encodeURIComponent(
+      info.videoDetails.title
+    )}-${Date.now()}-output.mp3`;
 
-  const stream = readableStream.pipe(writableStream);
+    const writableStream = fs.createWriteStream(
+      path.resolve('..', 'uploads', fileName)
+    );
 
-  stream.on('finish', () => {
-    res.json({
-      status: 'success',
-      data: {
-        downloadLink: `/download/${fileName}`,
-      },
+    const stream = readableStream.pipe(writableStream);
+
+    stream.on('finish', () => {
+      res.json({
+        status: 'success',
+        data: {
+          downloadLink: `/download/${fileName}`,
+        },
+      });
     });
-  });
+  } catch (err) {
+    next(err);
+  }
 });
 
-//routing
-app.use('/api', apiRouter);
+//global error handler that will catch errors and send a generic message back to client
+app.use((err, req, res, next) => {
+  res.json({
+    status: 'error',
+    message: 'Sorry, we couldnt find that video!',
+  });
+});
 
 app.listen(process.env.PORT || 8080, () => {
   console.log('The server is now listening for incoming requests!');
