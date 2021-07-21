@@ -19,10 +19,13 @@ app.post('/api/convert', async (req, res, next) => {
   try {
     //gets info about YT video or throws error if it cant find the specified video
     const info = await ytdlCore.getInfo(req.body.url);
-    const fileName = `${info.videoDetails.title}-${Date.now()}-output.mp3`;
+    const fileName = `${info.videoDetails.title}-${Date.now()}-output.${
+      req.body.format
+    }`;
 
     //create read stream from YT Video and create a writeable stream to save it
-    const readableStream = ytdlCore(req.body.url, { filter: 'audioonly' });
+    const filter = req.body.format === 'mp3' ? 'audioonly' : 'videoandaudio';
+    const readableStream = ytdlCore(req.body.url, { filter });
     const writableStream = fs.createWriteStream(
       path.resolve('..', 'uploads', fileName)
     );
@@ -41,7 +44,7 @@ app.post('/api/convert', async (req, res, next) => {
   }
 });
 
-//Sends back the request filename as a download
+//Sends back the requested filename as a download
 app.get('/download/:fileName', (req, res, next) => {
   const decodedFileName = decodeURIComponent(req.params.fileName);
   res.download(path.resolve('..', 'uploads', decodedFileName), (err) => {
