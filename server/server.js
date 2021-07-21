@@ -17,20 +17,20 @@ app.use(express.static(path.resolve('..', 'client', 'build')));
 //Handles converting the file to mp3, saving it to the disk, sending a response back with the DL link
 app.post('/api/convert', async (req, res, next) => {
   try {
-    const { url } = req.body;
-
-    const info = await ytdlCore.getInfo(url);
-
-    const readableStream = ytdlCore(url, { filter: 'audioonly' });
+    //gets info about YT video or throws error if it cant find the specified video
+    const info = await ytdlCore.getInfo(req.body.url);
     const fileName = `${info.videoDetails.title}-${Date.now()}-output.mp3`;
 
+    //create read stream from YT Video and create a writeable stream to save it
+    const readableStream = ytdlCore(req.body.url, { filter: 'audioonly' });
     const writableStream = fs.createWriteStream(
       path.resolve('..', 'uploads', fileName)
     );
 
-    const stream = readableStream.pipe(writableStream);
+    //
+    readableStream.pipe(writableStream);
 
-    stream.on('finish', () => {
+    writableStream.on('finish', () => {
       res.json({
         status: 'success',
         data: {
