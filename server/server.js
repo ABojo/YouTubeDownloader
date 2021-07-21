@@ -27,10 +27,8 @@ app.post('/api/convert', async (req, res, next) => {
       path.resolve('..', 'uploads', fileName)
     );
 
-    //
-    readableStream.pipe(writableStream);
-
-    writableStream.on('finish', () => {
+    //push read stream into write stream + added event handler that will send the json response once the finish event is fired
+    readableStream.pipe(writableStream).on('finish', () => {
       res.json({
         status: 'success',
         data: {
@@ -39,21 +37,23 @@ app.post('/api/convert', async (req, res, next) => {
       });
     });
   } catch (err) {
-    next(err);
+    next(new Error("Sorry, we couldn't find that video!"));
   }
 });
 
 //Sends back the request filename as a download
-app.get('/download/:fileName', (req, res) => {
+app.get('/download/:fileName', (req, res, next) => {
   const decodedFileName = decodeURIComponent(req.params.fileName);
-  res.download(path.resolve('..', 'uploads', decodedFileName));
+  res.download(path.resolve('..', 'uploads', decodedFileName), (err) => {
+    if (err) next(new Error('Sorry, that file does not exist!'));
+  });
 });
 
 //global error handler that will catch errors and send a generic message back to client
 app.use((err, req, res, next) => {
   res.json({
     status: 'error',
-    message: 'Sorry, we couldnt find that video!',
+    message: err.message,
   });
 });
 
