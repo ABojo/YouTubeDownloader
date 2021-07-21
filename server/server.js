@@ -17,30 +17,41 @@ app.use(express.static(paths.buildFolder));
 //Handles converting the file to mp3, saving it to the disk, sending a response back with the DL link
 app.post('/api/convert', async (req, res, next) => {
   try {
-    //gets info about YT video or throws error if it cant find the specified video
-    const info = await ytdlCore.getInfo(req.body.url);
-    const fileName = `${info.videoDetails.title}-${Date.now()}-output.${
-      req.body.format
-    }`;
+    const { url, fileExtension } = req.body;
+
+    //only accept mp3 or mp4 formats
+    if (fileExtension !== 'mp3' && fileExtension !== 'mp4')
+      throw new Error('Sorry, you must specify a fileExtension of mp3 or mp4!');
+
+    //gets info about specified youtube video
+    const info = await ytdlCore.getInfo(url);
+    const { title } = info.videoDetails;
+
+    const fileName = `${title}-${Date.now()}.${fileExtension}`;
 
     //create read stream from YT Video and create a writeable stream to save it
-    const filter = req.body.format === 'mp3' ? 'audioonly' : 'videoandaudio';
-    const readableStream = ytdlCore(req.body.url, { filter });
+    const filter = fileExtension === 'mp3' ? 'audioonly' : 'videoandaudio';
+    const readableStream = ytdlCore(url, { filter });
     const writableStream = fs.createWriteStream(
       `${paths.downloadFolder}/${fileName}`
     );
 
     //push read stream into write stream + added event handler that will send the json response once the finish event is fired
-    readableStream.pipe(writableStream).on('finish', () => {
+    readableStream.pipe(writableStream);
+
+    writableStream.on('finish', () => {
       res.json({
         status: 'success',
         data: {
+          title,
           downloadLink: `/download/${encodeURIComponent(fileName)}`,
+          details: info.videoDetails,
         },
       });
     });
   } catch (err) {
-    next(new Error("Sorry, we couldn't find that video!"));
+    console.log(err);
+    next(err);
   }
 });
 
