@@ -25,7 +25,7 @@ app.post('/api/convert', async (req, res, next) => {
 
     //gets info about specified youtube video
     const info = await ytdlCore.getInfo(url);
-    const { title } = info.videoDetails;
+    const { title, video_url } = info.videoDetails;
 
     const fileName = `${title}-${Date.now()}.${fileExtension}`;
 
@@ -44,8 +44,12 @@ app.post('/api/convert', async (req, res, next) => {
         status: 'success',
         data: {
           title,
+          videoUrl: video_url,
+          embedUrl: info.videoDetails.embed.iframeUrl,
+          thumbnail: info.videoDetails.thumbnails[0].url,
+          author: info.videoDetails.author.name,
+          authorUrl: info.videoDetails.author.channel_url,
           downloadLink: `/download/${encodeURIComponent(fileName)}`,
-          details: info.videoDetails,
         },
       });
     });
