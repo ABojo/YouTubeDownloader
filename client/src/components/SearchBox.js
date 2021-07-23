@@ -1,17 +1,31 @@
-function SearchBox() {
+function SearchBox(props) {
+  const { serachValue, setSearchValue } = props;
+
   return (
     <div>
-      <p className="mb-2 uppercase tracking-wide font-bold text-sm text-gray-400 invisible">
-        Enter Video Url Here
-      </p>
-      <div className="relative">
+      <div className="relative mb-6">
         <input
-          className="w-full border-2 border-red-100 shadow-inner rounded-lg p-4 pr-24"
+          onChange={(e) => setSearchValue(e.target.value)}
+          value={serachValue}
+          className="w-full border-2 border-red-100 shadow-inner rounded-lg p-5 pr-28"
           placeholder="Enter video URL here"
         ></input>
         <button className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow">
-          Search
+          Download
         </button>
+      </div>
+      <div className="text-sm text-gray-500 flex justify-start">
+        <label class="container max-w-max mr-6 flex items-center">
+          Video and Audio
+          <input type="radio" defaultChecked={true} name="format" />
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="container max-w-max">
+          <p className="text-md">Audio Only</p>
+          <input type="radio" name="format" />
+          <span class="checkmark"></span>
+        </label>
       </div>
     </div>
   );

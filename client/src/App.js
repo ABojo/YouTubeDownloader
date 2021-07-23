@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="max-w-2xl mx-auto w-11/12 py-12">
       <Header />
-      <SearchBox />
+      <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
     </div>
   );
 }
