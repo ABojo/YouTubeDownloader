@@ -1,6 +1,9 @@
-import { useState } from 'react';
-
-function SearchBox({ serachValue, setSearchValue, setFormat }) {
+function SearchBox({
+  serachValue,
+  setSearchValue,
+  setFormat,
+  getVideoDetails,
+}) {
   return (
     <div>
       <div className="relative mb-6">
@@ -11,7 +14,10 @@ function SearchBox({ serachValue, setSearchValue, setFormat }) {
           className="w-full border-2 border-red-100 shadow-inner rounded-lg py-5 pl-10 pr-28"
           placeholder="Enter video URL here"
         ></input>
-        <button className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow">
+        <button
+          onClick={getVideoDetails}
+          className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow"
+        >
           <i class="fas fa-download mr-1"></i> Download
         </button>
       </div>
