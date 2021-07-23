@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-function SearchBox({ serachValue, setSearchValue }) {
-  const [format, setFormat] = useState('mp4');
-
+function SearchBox({ serachValue, setSearchValue, setFormat }) {
   return (
     <div>
       <div className="relative mb-6">
@@ -13,10 +11,7 @@ function SearchBox({ serachValue, setSearchValue }) {
           className="w-full border-2 border-red-100 shadow-inner rounded-lg py-5 pl-10 pr-28"
           placeholder="Enter video URL here"
         ></input>
-        <button
-          className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow"
-          onClick={() => console.log(format)}
-        >
+        <button className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow">
           <i class="fas fa-download mr-1"></i> Download
         </button>
       </div>
