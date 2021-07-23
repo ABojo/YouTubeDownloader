@@ -1,5 +1,6 @@
 import Header from './components/Header';
 import SearchBox from './components/SearchBox';
+import VideoDetails from './components/VideoDetails';
 import { useState } from 'react';
 import API from './utils/API';
 
@@ -29,15 +30,27 @@ function App() {
     setVideoDetails(json.data);
   });
 
+  const clearVideoDetails = () => {
+    setVideoDetails(null);
+  };
+
   return (
     <div className="max-w-2xl mx-auto w-11/12 py-12">
       <Header />
-      <SearchBox
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        setFormat={setFormat}
-        getVideoDetails={getVideoDetails}
-      />
+      {videoDetails ? (
+        <VideoDetails
+          details={videoDetails}
+          format={format}
+          clearVideoDetails={clearVideoDetails}
+        />
+      ) : (
+        <SearchBox
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          setFormat={setFormat}
+          getVideoDetails={getVideoDetails}
+        />
+      )}
     </div>
   );
 }

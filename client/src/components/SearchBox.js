@@ -18,7 +18,7 @@ function SearchBox({
           onClick={getVideoDetails}
           className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow"
         >
-          <i class="fas fa-download mr-1"></i> Download
+          <i className="fas fa-download mr-1"></i> Download
         </button>
       </div>
       <div className="text-sm text-gray-500 flex justify-start">
@@ -28,13 +28,13 @@ function SearchBox({
         >
           Video and Audio
           <input type="radio" defaultChecked={true} name="format" />
-          <span class="checkmark"></span>
+          <span className="checkmark"></span>
         </label>
 
         <label className="container max-w-max" onClick={() => setFormat('mp3')}>
           <p className="text-md">Audio Only</p>
           <input type="radio" name="format" />
-          <span class="checkmark"></span>
+          <span className="checkmark"></span>
         </label>
       </div>
     </div>
