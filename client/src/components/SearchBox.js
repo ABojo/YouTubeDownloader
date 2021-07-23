@@ -4,14 +4,15 @@ function SearchBox(props) {
   return (
     <div>
       <div className="relative mb-6">
+        <i class="text-red-500 text-lg fas fa-link absolute left-2 top-1/2 transform -translate-y-1/2"></i>
         <input
           onChange={(e) => setSearchValue(e.target.value)}
           value={serachValue}
-          className="w-full border-2 border-red-100 shadow-inner rounded-lg p-5 pr-28"
+          className="w-full border-2 border-red-100 shadow-inner rounded-lg py-5 pl-8 pr-28"
           placeholder="Enter video URL here"
         ></input>
         <button className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow">
-          Download
+          <i class="fas fa-download mr-1"></i> Download
         </button>
       </div>
       <div className="text-sm text-gray-500 flex justify-start">
