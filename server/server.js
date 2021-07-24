@@ -27,7 +27,8 @@ app.post('/api/convert', async (req, res, next) => {
     const info = await ytdlCore.getInfo(url);
     const { title, video_url } = info.videoDetails;
 
-    const fileName = `${title}-${Date.now()}.${fileExtension}`;
+    const strippedTitle = title.replace(/[/\\?%*:|"<>]/g, ''); //strips out characters that are illegal in file names
+    const fileName = `${strippedTitle}-${Date.now()}.${fileExtension}`;
 
     //create read stream from YT Video and create a writeable stream to save it
     const filter = fileExtension === 'mp3' ? 'audioonly' : 'videoandaudio';
