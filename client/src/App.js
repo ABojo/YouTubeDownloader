@@ -2,6 +2,7 @@ import Header from './components/Header';
 import SearchBox from './components/SearchBox';
 import VideoDetails from './components/VideoDetails';
 import Loader from './components/Loader';
+import ErrorMessage from './components/ErrorMessage';
 import { useState } from 'react';
 import API from './utils/API';
 
@@ -39,6 +40,7 @@ function App() {
     <div className="max-w-2xl mx-auto w-11/12 py-12">
       {isLoading && <Loader />}
       <Header />
+      {errorMessage && <ErrorMessage message={errorMessage} />}
       {videoDetails ? (
         <VideoDetails
           details={videoDetails}
