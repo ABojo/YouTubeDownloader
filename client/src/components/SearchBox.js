@@ -1,5 +1,5 @@
 function SearchBox({
-  serachValue,
+  searchValue,
   setSearchValue,
   setFormat,
   getVideoDetails,
@@ -10,7 +10,7 @@ function SearchBox({
         <i className="text-red-300 text-lg fas fa-link absolute left-2 top-1/2 transform -translate-y-1/2"></i>
         <input
           onChange={(e) => setSearchValue(e.target.value)}
-          value={serachValue}
+          value={searchValue}
           className="w-full border-2 border-red-100 shadow-inner rounded-lg py-5 pl-10 pr-36"
           placeholder="Enter video URL here"
         ></input>
