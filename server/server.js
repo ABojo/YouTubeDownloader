@@ -27,6 +27,8 @@ app.post('/api/convert', async (req, res, next) => {
     const info = await ytdlCore.getInfo(url);
     const { title, video_url } = info.videoDetails;
 
+    console.log(info.videoDetails);
+
     const strippedTitle = title.replace(/[/\\?%*:|"<>]/g, ''); //strips out characters that are illegal in file names
     const fileName = `${strippedTitle}-${Date.now()}.${fileExtension}`;
 
@@ -47,11 +49,19 @@ app.post('/api/convert', async (req, res, next) => {
         status: 'success',
         data: {
           title,
+          description: info.videoDetails.description,
+          lengthSeconds: info.videoDetails.lengthSeconds,
+          viewCount: info.videoDetails.viewCount,
+          publishDate: info.videoDetails.publishDate,
+          likes: info.videoDetails.likes,
+          dislikes: info.videoDetails.dislikes,
+          videoId: info.videoDetails.videoId,
           videoUrl: video_url,
           embedUrl: info.videoDetails.embed.iframeUrl,
           thumbnail: info.videoDetails.thumbnails[0].url,
           author: info.videoDetails.author.name,
           authorUrl: info.videoDetails.author.channel_url,
+          authorSubs: info.videoDetails.author.subscriber_count,
           downloadLink: `/download/${encodeURIComponent(fileName)}`,
         },
       });
