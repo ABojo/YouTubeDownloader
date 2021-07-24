@@ -1,5 +1,4 @@
 function VideoDetails({ details, format, clearVideoDetails }) {
-  console.log(details);
   return (
     <div className="w-full rounded-lg bg-gray-100 p-5">
       <iframe

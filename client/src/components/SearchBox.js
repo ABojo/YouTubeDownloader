@@ -7,7 +7,7 @@ function SearchBox({
   return (
     <div>
       <div className="relative mb-6">
-        <i class="text-red-300 text-lg fas fa-link absolute left-2 top-1/2 transform -translate-y-1/2"></i>
+        <i className="text-red-300 text-lg fas fa-link absolute left-2 top-1/2 transform -translate-y-1/2"></i>
         <input
           onChange={(e) => setSearchValue(e.target.value)}
           value={serachValue}
