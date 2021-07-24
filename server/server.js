@@ -32,7 +32,9 @@ app.post('/api/convert', async (req, res, next) => {
 
     //create read stream from YT Video and create a writeable stream to save it
     const filter = fileExtension === 'mp3' ? 'audioonly' : 'videoandaudio';
-    const readableStream = ytdlCore(url, { filter });
+    const quality = fileExtension === 'mp3' ? 'highestaudio' : 'highestvideo';
+
+    const readableStream = ytdlCore(url, { filter, quality });
     const writableStream = fs.createWriteStream(
       `${paths.downloadFolder}/${fileName}`
     );
