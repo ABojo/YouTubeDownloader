@@ -1,5 +1,5 @@
 function VideoDetails({ details, clearVideoDetails }) {
-  const downloadPath = `/download/${details.videoId}`;
+  const downloadPath = `/api/videos/${details.videoId}`;
 
   return (
     <div className="w-full rounded-lg bg-gray-100 p-5 shadow">
