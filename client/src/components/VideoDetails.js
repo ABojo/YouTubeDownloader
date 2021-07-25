@@ -1,6 +1,6 @@
 function VideoDetails({ details, format, clearVideoDetails }) {
   return (
-    <div className="w-full rounded-lg bg-gray-100 p-5">
+    <div className="w-full rounded-lg bg-gray-100 p-5 shadow">
       <iframe
         title={details.title}
         className="w-full h-96 mb-6"
