@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const ytdlCore = require('ytdl-core');
 const fs = require('fs');
-const paths = require('./utils/paths');
+const path = require('path');
 const app = express();
 
 //Request logging
@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //Serve react build folder
-app.use(express.static(paths.buildFolder));
+app.use(express.static(path.resolve('..', 'client', 'build')));
 
 //get details about the specified video and send it back to the user
 app.get('/api/videos/:videoId', async (req, res, next) => {
