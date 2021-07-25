@@ -8,7 +8,21 @@ function VideoDetails({ details, format, clearVideoDetails }) {
       ></iframe>
       <div className="mb-6">
         <h1 className="text-lg font-bold text-gray-900">{details.title}</h1>
-        <h2 className="text-md text-gray-500">{details.author}</h2>
+        <h2 className="text-md text-gray-500 mb-3">{details.author}</h2>
+        <div className="text-sm text-gray-500 flex items-center">
+          <p className="mr-3">
+            <i className="fas fa-eye mr-1 text-yellow-500"></i>
+            {details.viewCount}
+          </p>
+          <p className="mr-3">
+            <i className="fas fa-thumbs-up mr-1 text-green-500"></i>
+            {details.likes}
+          </p>
+          <p className="mr-3">
+            <i className="fas fa-thumbs-down mr-1 text-red-500"></i>
+            {details.dislikes}
+          </p>
+        </div>
       </div>
       <a
         href={details.downloadLink}
