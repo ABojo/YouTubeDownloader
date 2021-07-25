@@ -15,7 +15,8 @@
   "scripts": {
     "start-server": "cd server && nodemon server.js",
     "start-react": "cd client && npm start",
-    "start": "npm-run-all --parallel start-server start-react"
+    "dev": "npm-run-all --parallel start-server start-react",
+    "start": "cd server && node server.js"
   },
   "keywords": [],
   "author": "",
