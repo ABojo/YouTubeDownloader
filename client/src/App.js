@@ -7,16 +7,14 @@ import { useState } from 'react';
 import API from './utils/API';
 
 function App() {
-  const [searchValue, setSearchValue] = useState('');
+  const [videoId, setVideoId] = useState(null);
   const [videoDetails, setVideoDetails] = useState(null);
-  const [format, setFormat] = useState('mp4');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const getVideoDetails = async () => {
     //If the user hasnt entered a value into the input then display an error message
-    if (!searchValue)
-      return setErrorMessage('Sorry, you must enter a valid URL!');
+    if (!videoId) return setErrorMessage('Sorry, you must enter a valid URL!');
 
     //Clear error message everytime the user makes a request
     setErrorMessage(null);
@@ -24,7 +22,7 @@ function App() {
     //Start loading
     setIsLoading(true);
 
-    const json = await API.getVideoDetails(searchValue, format);
+    const json = await API.getVideoDetails(videoId);
 
     //Stop loading
     setIsLoading(false);
@@ -50,14 +48,12 @@ function App() {
       {videoDetails ? (
         <VideoDetails
           details={videoDetails}
-          format={format}
           clearVideoDetails={clearVideoDetails}
         />
       ) : (
         <SearchBox
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          setFormat={setFormat}
+          videoId={videoId}
+          setVideoId={setVideoId}
           getVideoDetails={getVideoDetails}
         />
       )}
