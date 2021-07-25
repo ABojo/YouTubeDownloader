@@ -1,17 +1,11 @@
 const API = (() => {
-  const getVideoDetails = async (url, fileExtension) => {
-    const response = await fetch('/api/convert', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ url, fileExtension }),
-    });
-
+  const getVideoDetails = async (videoId) => {
+    const response = await fetch(`/api/videos/${videoId}`);
     const json = await response.json();
 
     return json;
   };
+
   return { getVideoDetails };
 })();
 
