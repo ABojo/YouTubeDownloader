@@ -14,7 +14,8 @@ function App() {
 
   const getVideoDetails = async () => {
     //If the user hasnt entered a value into the input then display an error message
-    if (!videoId) return setErrorMessage('Sorry, you must enter a valid URL!');
+    if (!videoId)
+      return setErrorMessage('Sorry, you must enter a valid URL/ID!');
 
     //Clear error message everytime the user makes a request
     setErrorMessage(null);
@@ -29,7 +30,7 @@ function App() {
 
     if (json.status === 'error')
       return setErrorMessage(
-        "Sorry, we couldn't find that video! Please make sure you entered the right URL."
+        "Sorry, we couldn't find that video! Please make sure you entered the right URL/ID"
       );
 
     //If there was no error save the video details in state

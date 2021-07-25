@@ -1,4 +1,6 @@
-function VideoDetails({ details, format, clearVideoDetails }) {
+function VideoDetails({ details, clearVideoDetails }) {
+  const downloadPath = `/download/${details.videoId}`;
+
   return (
     <div className="w-full rounded-lg bg-gray-100 p-5 shadow">
       <iframe
@@ -25,14 +27,18 @@ function VideoDetails({ details, format, clearVideoDetails }) {
         </div>
       </div>
       <a
-        href={details.downloadLink}
+        href={`${downloadPath}/mp4`}
         className="w-full bg-red-500 rounded-lg p-3 text-white font-bold text-xl flex justify-center items-center mb-3 hover:bg-red-400 transition duration-200"
         download
       >
-        <i
-          className={`fas fa-${format === 'mp3' ? 'music' : 'video'} mr-3`}
-        ></i>
-        Download Now
+        <i className="fas fa-video mr-3"></i> Download Video
+      </a>
+      <a
+        href={`${downloadPath}/mp3`}
+        className="w-full bg-red-500 rounded-lg p-3 text-white font-bold text-xl flex justify-center items-center mb-3 hover:bg-red-400 transition duration-200"
+        download
+      >
+        <i className="fas fa-music mr-3"></i> Download Audio
       </a>
       <button
         onClick={clearVideoDetails}
