@@ -14,70 +14,58 @@ app.use(express.json());
 //Serve react build folder
 app.use(express.static(paths.buildFolder));
 
-//Handles converting the file to mp3, saving it to the disk, sending a response back with the DL link
-app.post('/api/convert', async (req, res, next) => {
+//get details about the specified video and send it back to the user
+app.get('/api/videos/:videoId', async (req, res, next) => {
   try {
-    const { url, fileExtension } = req.body;
+    const info = await ytdlCore.getInfo(req.params.videoId);
 
-    //only accept mp3 or mp4 formats
-    if (fileExtension !== 'mp3' && fileExtension !== 'mp4')
-      throw new Error('Sorry, you must specify a fileExtension of mp3 or mp4!');
-
-    //gets info about specified youtube video
-    const info = await ytdlCore.getInfo(url);
-    const { title, video_url } = info.videoDetails;
-
-    console.log(info.videoDetails);
-
-    const strippedTitle = title.replace(/[/\\?%*:|"<>]/g, ''); //strips out characters that are illegal in file names
-    const fileName = `${strippedTitle}-${Date.now()}.${fileExtension}`;
-
-    //create read stream from YT Video and create a writeable stream to save it
-    const filter = fileExtension === 'mp3' ? 'audioonly' : 'videoandaudio';
-    const quality = fileExtension === 'mp3' ? 'highestaudio' : 'highestvideo';
-
-    const readableStream = ytdlCore(url, { filter, quality });
-    const writableStream = fs.createWriteStream(
-      `${paths.downloadFolder}/${fileName}`
-    );
-
-    //push read stream into write stream + added event handler that will send the json response once the finish event is fired
-    readableStream.pipe(writableStream);
-
-    writableStream.on('finish', () => {
-      res.json({
-        status: 'success',
-        data: {
-          title,
-          description: info.videoDetails.description,
-          lengthSeconds: info.videoDetails.lengthSeconds,
-          viewCount: info.videoDetails.viewCount,
-          publishDate: info.videoDetails.publishDate,
-          likes: info.videoDetails.likes,
-          dislikes: info.videoDetails.dislikes,
-          videoId: info.videoDetails.videoId,
-          videoUrl: video_url,
-          embedUrl: info.videoDetails.embed.iframeUrl,
-          thumbnail: info.videoDetails.thumbnails[0].url,
-          author: info.videoDetails.author.name,
-          authorUrl: info.videoDetails.author.channel_url,
-          authorSubs: info.videoDetails.author.subscriber_count,
-          downloadLink: `/download/${encodeURIComponent(fileName)}`,
-        },
-      });
+    res.json({
+      status: 'success',
+      data: {
+        title: info.videoDetails.title,
+        description: info.videoDetails.description,
+        lengthSeconds: info.videoDetails.lengthSeconds,
+        viewCount: info.videoDetails.viewCount,
+        publishDate: info.videoDetails.publishDate,
+        likes: info.videoDetails.likes,
+        dislikes: info.videoDetails.dislikes,
+        videoId: info.videoDetails.videoId,
+        videoUrl: info.videoDetails.video_url,
+        embedUrl: info.videoDetails.embed.iframeUrl,
+        thumbnail: info.videoDetails.thumbnails[0].url,
+        author: info.videoDetails.author.name,
+        authorUrl: info.videoDetails.author.channel_url,
+        authorSubs: info.videoDetails.author.subscriber_count,
+      },
     });
   } catch (err) {
     next(err);
   }
 });
 
-//Sends back the requested filename as a download
-app.get('/download/:fileName', (req, res, next) => {
-  const fileName = decodeURIComponent(req.params.fileName);
+//stream the file back to the client in the requested format
+app.get('/api/videos/:videoId/:format', async (req, res, next) => {
+  try {
+    const { videoId, format } = req.params;
 
-  res.download(`${paths.downloadFolder}/${fileName}`, (err) => {
-    if (err) next(new Error('Sorry, that file does not exist!'));
-  });
+    if (format !== 'mp3' && format !== 'mp4')
+      throw new Error('Sorry, you must specify a format of mp3 or mp4!');
+
+    const title = (
+      await ytdlCore.getInfo(req.params.videoId)
+    ).videoDetails.title.replace(/[/\\?%*:|"<>]/g, '');
+
+    //create read stream from YT Video and create a writeable stream to save it
+    const filter = format === 'mp3' ? 'audioonly' : 'videoandaudio';
+    const quality = format === 'mp3' ? 'highestaudio' : 'highestvideo';
+
+    const readableStream = ytdlCore(videoId, { filter, quality });
+
+    res.attachment(`${title}.${format}`);
+    readableStream.pipe(res);
+  } catch (err) {
+    next(err);
+  }
 });
 
 //global error handler that will catch errors and send a generic message back to client
