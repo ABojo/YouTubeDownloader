@@ -2,7 +2,7 @@ function VideoDetails({ details, clearVideoDetails }) {
   const downloadPath = `/api/videos/${details.videoId}`;
 
   return (
-    <div className="w-full rounded-lg bg-gray-100 p-5 shadow">
+    <div className="w-full rounded-lg bg-gray-100 p-5 shadow mb-24">
       <h1 className="mb-3 tracking-widest uppercase text-gray-500 text-sm">
         Video Details
       </h1>

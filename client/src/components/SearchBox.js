@@ -1,6 +1,6 @@
 function SearchBox({ videoId, setVideoId, getVideoDetails }) {
   return (
-    <div className="relative mb-6">
+    <div className="relative mb-24">
       <i className="text-red-300 text-lg fas fa-link absolute left-2 top-1/2 transform -translate-y-1/2"></i>
       <input
         onChange={(e) => setVideoId(e.target.value)}
