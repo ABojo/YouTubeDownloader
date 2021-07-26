@@ -3,7 +3,8 @@ import SearchBox from './components/SearchBox';
 import VideoDetails from './components/VideoDetails';
 import Loader from './components/Loader';
 import ErrorMessage from './components/ErrorMessage';
-import { useState, useEffect } from 'react';
+import HowTo from './components/HowTo';
+import { useState, useEffect, Fragment } from 'react';
 import API from './utils/API';
 
 function App() {
@@ -52,11 +53,14 @@ function App() {
           clearVideoDetails={clearVideoDetails}
         />
       ) : (
-        <SearchBox
-          videoId={videoId}
-          setVideoId={setVideoId}
-          getVideoDetails={getVideoDetails}
-        />
+        <Fragment>
+          <SearchBox
+            videoId={videoId}
+            setVideoId={setVideoId}
+            getVideoDetails={getVideoDetails}
+          />
+          <HowTo />
+        </Fragment>
       )}
     </div>
   );
