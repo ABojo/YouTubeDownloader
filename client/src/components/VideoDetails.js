@@ -3,15 +3,15 @@ function VideoDetails({ details, clearVideoDetails }) {
 
   return (
     <div className="w-full rounded-lg bg-gray-100 p-5 shadow">
+      <h1 className="mb-3 tracking-widest uppercase text-gray-500 text-sm">
+        Video Details
+      </h1>
       <iframe
         title={details.title}
-        className="w-full h-96 mb-12"
+        className="w-full h-96 mb-3"
         src={details.embedUrl}
       ></iframe>
       <div className="mb-12">
-        <h1 className="mb-3 tracking-widest uppercase text-gray-500 text-sm">
-          Video Details
-        </h1>
         <h1 className="text-lg font-bold text-gray-900 mb-3">
           {details.title}
         </h1>
