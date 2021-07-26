@@ -8,11 +8,11 @@ function VideoDetails({ details, clearVideoDetails }) {
         className="w-full h-96 mb-6"
         src={details.embedUrl}
       ></iframe>
-      <div className="mb-6">
-        <h1 className="text-lg font-bold text-gray-900">
-          <i class="fab fa-youtube-square mr-1"></i>
-          {details.title}
+      <div className="mb-12">
+        <h1 className="mb-3 tracking-widest uppercase text-gray-500 text-sm">
+          Video Details
         </h1>
+        <h1 className="text-lg font-bold text-gray-900">{details.title}</h1>
         <h2 className="text-md text-gray-500 mb-3">
           <i class="far fa-user mr-1"></i>
           {details.author}
@@ -33,6 +33,9 @@ function VideoDetails({ details, clearVideoDetails }) {
         </div>
       </div>
       <div className="mb-6">
+        <h1 className="mb-3 tracking-widest uppercase text-gray-500 text-sm">
+          Save this video
+        </h1>
         <a
           href={`${downloadPath}/mp4`}
           className="w-full bg-red-500 rounded-lg p-3 text-white font-bold text-lg flex justify-center items-center mb-3 hover:bg-red-400 transition duration-200 mr-6"
