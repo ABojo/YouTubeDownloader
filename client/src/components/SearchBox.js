@@ -6,7 +6,7 @@ function SearchBox({ videoId, setVideoId, getVideoDetails }) {
         onChange={(e) => setVideoId(e.target.value)}
         value={videoId}
         className="w-full border-2 border-red-100 shadow-inner rounded-lg py-5 pl-10 pr-36"
-        placeholder="Enter video URL or ID here"
+        placeholder="Video URL or video ID"
       ></input>
       <button
         onClick={getVideoDetails}
