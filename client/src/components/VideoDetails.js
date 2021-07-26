@@ -16,7 +16,7 @@ function VideoDetails({ details, clearVideoDetails }) {
           {details.title}
         </h1>
         <h2 className="text-md text-gray-500 mb-3">
-          <i class="far fa-user mr-1"></i>
+          <i className="far fa-user mr-1"></i>
           {details.author}
         </h2>
         <div className="text-sm text-gray-500 flex items-center">

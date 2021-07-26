@@ -12,7 +12,7 @@ function SearchBox({ videoId, setVideoId, getVideoDetails }) {
         onClick={getVideoDetails}
         className="p-3 bg-red-500 hover:bg-red-400 font-bold text-white rounded-lg absolute right-2 top-1/2 transform -translate-y-1/2 transition duration-200 shadow"
       >
-        <i class="fas fa-search mr-1"></i> Search
+        <i className="fas fa-search mr-1"></i> Search
       </button>
     </div>
   );

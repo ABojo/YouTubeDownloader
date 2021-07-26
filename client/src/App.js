@@ -3,11 +3,11 @@ import SearchBox from './components/SearchBox';
 import VideoDetails from './components/VideoDetails';
 import Loader from './components/Loader';
 import ErrorMessage from './components/ErrorMessage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import API from './utils/API';
 
 function App() {
-  const [videoId, setVideoId] = useState(null);
+  const [videoId, setVideoId] = useState('');
   const [videoDetails, setVideoDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -23,7 +23,7 @@ function App() {
     //Start loading
     setIsLoading(true);
 
-    const json = await API.getVideoDetails(videoId);
+    const json = await API.getVideoDetails(encodeURIComponent(videoId));
 
     //Stop loading
     setIsLoading(false);
