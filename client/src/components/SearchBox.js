@@ -1,4 +1,11 @@
+import { useEffect } from 'react';
+
 function SearchBox({ videoId, setVideoId, getVideoDetails }) {
+  useEffect(() => {
+    //Scrolls back to the top of the page on mount to guard against the component rendering and having the user be scrolled halfway down the page
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="relative mb-24">
       <i className="text-red-300 text-lg fas fa-link absolute left-2 top-1/2 transform -translate-y-1/2"></i>
