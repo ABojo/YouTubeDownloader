@@ -72,6 +72,7 @@ app.get('/api/videos/:videoId/:format', async (req, res, next) => {
 app.use((err, req, res, next) => {
   res.json({
     status: 'error',
+    data: err,
     message: err.message,
   });
 });
