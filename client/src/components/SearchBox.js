@@ -17,7 +17,7 @@ function SearchBox({ videoId, setVideoId, getVideoDetails }) {
       <input
         onChange={(e) => setVideoId(e.target.value)}
         onKeyPress={(e) => {
-          if (e.key === 'Enter') getVideoDetails();
+          if (e.key === 'Enter' && videoId) getVideoDetails();
         }}
         value={videoId}
         className={`w-full border-2  shadow-inner rounded-lg py-5 pl-10 pr-36 outline-none border${currentColor} ${transClasses}`}
