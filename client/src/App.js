@@ -5,7 +5,7 @@ import Loader from './components/Loader';
 import ErrorMessage from './components/ErrorMessage';
 import HowTo from './components/HowTo';
 import Footer from './components/Footer';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import API from './utils/API';
 
 function App() {
@@ -42,6 +42,11 @@ function App() {
   const clearVideoDetails = () => {
     setVideoDetails(null);
   };
+
+  //hook to remove error messsage once user changes the video id
+  useEffect(() => {
+    if (errorMessage) setErrorMessage(null);
+  }, [videoId]);
 
   return (
     <div className="max-w-2xl mx-auto w-11/12 py-12">
