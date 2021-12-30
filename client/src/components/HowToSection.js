@@ -1,5 +1,5 @@
-import stepTwoA from '../images/Step2A.png';
-import stepTwoB from '../images/Step2B.png';
+import stepTwoImageA from '../images/Step2A.png';
+import stepTwoImageB from '../images/Step2B.png';
 import HowToStep from './HowToStep';
 
 function HowToSection() {
@@ -20,7 +20,7 @@ function HowToSection() {
         text='Now that you have the video open look up at the address bar and either
         copy the entire URL or just the unique video ID at the end after the
         "?v=".'
-        images={[stepTwoA, stepTwoB]}
+        images={[stepTwoImageA, stepTwoImageB]}
       />
       <HowToStep
         number="3"
