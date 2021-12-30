@@ -3,7 +3,7 @@ import SearchBox from './components/SearchBox';
 import VideoDetails from './components/VideoDetails';
 import Loader from './components/Loader';
 import ErrorMessage from './components/ErrorMessage';
-import HowTo from './components/HowTo';
+import HowToSection from './components/HowToSection';
 import Footer from './components/Footer';
 import { useState, Fragment, useEffect } from 'react';
 import API from './utils/API';
@@ -65,7 +65,7 @@ function App() {
             setVideoId={setVideoId}
             getVideoDetails={getVideoDetails}
           />
-          <HowTo />
+          <HowToSection />
         </Fragment>
       )}
       <Footer />

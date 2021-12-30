@@ -2,7 +2,7 @@ import stepTwoA from '../images/Step2A.png';
 import stepTwoB from '../images/Step2B.png';
 import HowToStep from './HowToStep';
 
-function HowTo() {
+function HowToSection() {
   return (
     <div className="bg-gray-100 p-5 rounded-lg mb-24">
       <h1 className="mb-12 text-gray-500 text-4xl text-center font-thin">
@@ -39,4 +39,4 @@ function HowTo() {
   );
 }
 
-export default HowTo;
+export default HowToSection;
