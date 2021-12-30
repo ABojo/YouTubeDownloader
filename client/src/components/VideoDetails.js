@@ -3,7 +3,7 @@ function VideoDetails({ details, clearVideoDetails }) {
 
   return (
     <div className="w-full rounded-lg bg-gray-100 p-5 shadow mb-24">
-      <h1 className="mb-3 tracking-widest uppercase text-gray-500 text-sm">
+      <h1 className="mb-3 tracking-widest uppercase text-gray-900 text-sm font-bold">
         Video Details
       </h1>
       <iframe
@@ -12,26 +12,26 @@ function VideoDetails({ details, clearVideoDetails }) {
         src={details.embedUrl}
       ></iframe>
       <div className="mb-12">
-        <h1 className="text-lg font-bold text-gray-900 mb-3">
+        <h1 className="text-lg font-semibold text-gray-900 mb-1">
           {details.title}
         </h1>
-        <h2 className="text-md text-gray-500 mb-3">
-          <i className="far fa-user mr-1"></i>
-          {details.author}
-        </h2>
-        <div className="text-sm text-gray-500 flex items-center">
+        <div className="text-sm text-gray-900 flex items-center">
           <p className="mr-3">
             <i className="fas fa-eye mr-1 text-yellow-500"></i>
-            {details.viewCount}
+            {details.viewCount} views
           </p>
           <p className="mr-3">
             <i className="fas fa-thumbs-up mr-1 text-green-500"></i>
             {details.likes}
           </p>
+          <p className="mr-3">
+            <i className="far fa-calendar mr-1 text-red-500"></i>
+            {details.publishDate}
+          </p>
         </div>
       </div>
       <div className="mb-6">
-        <h1 className="mb-3 tracking-widest uppercase text-gray-500 text-sm">
+        <h1 className="mb-3 tracking-widest uppercase text-gray-900 font-bold text-sm">
           Save this video
         </h1>
         <a
@@ -56,7 +56,7 @@ function VideoDetails({ details, clearVideoDetails }) {
       </div>
       <button
         onClick={clearVideoDetails}
-        className="w-full border-gray-500 border rounded-lg p-3 text-gray-500 text-md hover:bg-gray-200 transition duration-200"
+        className="w-full border-gray-500 border rounded-lg p-3 text-gray-900 text-md hover:bg-gray-200 transition duration-200"
       >
         Go Back
       </button>
