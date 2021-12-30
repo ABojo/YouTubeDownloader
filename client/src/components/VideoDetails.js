@@ -28,10 +28,6 @@ function VideoDetails({ details, clearVideoDetails }) {
             <i className="fas fa-thumbs-up mr-1 text-green-500"></i>
             {details.likes}
           </p>
-          <p className="mr-3">
-            <i className="fas fa-thumbs-down mr-1 text-red-500"></i>
-            {details.dislikes}
-          </p>
         </div>
       </div>
       <div className="mb-6">
